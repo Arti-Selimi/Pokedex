@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+import { ApolloProvider } from "@apollo/client";
+import client from "@/libs/ApolloClient";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -12,7 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Pokedex",
   description: "A website to showcase the use of the pokedex.",
 };
@@ -27,7 +28,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ApolloProvider client={client}>
+          {children}
+        </ApolloProvider>
       </body>
     </html>
   );
