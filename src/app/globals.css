@@ -1,4 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @import "tailwindcss";
+
+:root {
+  --font-pokedex: 'Press Start 2P', cursive;
+}
+
 
 @theme {
   --color-background: #171717;
@@ -8,6 +14,9 @@
   --color-metal: #DEDEDE;
 }
 
+body {
+  font-family: var(--font-pokedex);
+}
 .attribute {
   font-weight: bolder;
   font-size: .85rem;
@@ -22,16 +31,16 @@
 
 .custom-border {
   border-radius: 6px;
-  border: 1px solid color-mix(in oklab, var(--color-foreground) 30%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-foreground) 80%, transparent);
 }
 
 .custom-border-bottom {
-  border-bottom: 1px solid color-mix(in oklab, var(--color-foreground) 20%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--color-foreground) 40%, transparent);
   padding-bottom: 8px;
 }
 
 .custom-border-top {
-  border-top: 1px solid color-mix(in oklab, var(--color-foreground) 20%, transparent);
+  border-top: 1px solid color-mix(in oklab, var(--color-foreground) 40%, transparent);
   padding-top: 8px;
 }
 

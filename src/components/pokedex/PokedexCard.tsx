@@ -18,8 +18,8 @@ export default function PokedexCard({ pokemon }: Props) {
           height={200}
         />
       </div>
-      <div className="grid grid-cols-2 gap-1">
-        <div className="flex flex-col flex-1 gap-2 min-h-full bg-background custom-border p-2 text-xs shadow-inner font-mono">
+      <div className="grid grid-cols-1 gap-1">
+        <div className="flex flex-col flex-1 gap-2 min-h-full bg-background custom-border p-2 text-xs shadow-inner">
           <h1 className="text-sm font-bold text-center uppercase custom-border-bottom">
             Pokemon name:{" "}
             <span className="font-extrabold uppercase tracking-wide text-yellow-300 drop-shadow-md">
@@ -68,7 +68,7 @@ export default function PokedexCard({ pokemon }: Props) {
             </div>
           </div>
         </div>
-        <div className="flex flex-col flex-1 gap-2 min-h-full bg-background custom-border p-2 text-xs shadow-inner font-mono">
+        <div className="flex flex-col flex-1 gap-2 min-h-full bg-background custom-border p-2 text-xs shadow-inner">
           <h1 className="text-sm font-bold uppercase text-center custom-border-bottom">
             More Info
           </h1>
