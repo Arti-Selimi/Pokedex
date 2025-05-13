@@ -1,5 +1,4 @@
-import { ApolloProvider } from "@apollo/client";
-import client from "@/libs/ApolloClient";
+import ApolloClientProvider from "./Providers/ApolloClientProvider";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -28,9 +27,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ApolloProvider client={client}>
+        <ApolloClientProvider>
           {children}
-        </ApolloProvider>
+        </ApolloClientProvider>
       </body>
     </html>
   );

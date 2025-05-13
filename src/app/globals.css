@@ -5,3 +5,15 @@
   --color-foreground: #E42A3B;
   --color-screen: #668CFF;
 }
+
+.attribute {
+  font-weight: bolder;
+  font-size: .85rem;
+  color: var(--color-foreground);
+}
+
+.value {
+  font-weight: bolder;
+  font-size: .75rem;
+  color: var(--color-foreground);
+}

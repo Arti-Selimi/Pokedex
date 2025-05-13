@@ -17,7 +17,7 @@ export const Main = () => {
                     <Image src={ash} alt="Ash Ketchum" width={250} height={250}/>
                 </div>
             </div>
-            <div>
+            <div className="w-full">
                 <Pokedex />
             </div>
             <div></div>
