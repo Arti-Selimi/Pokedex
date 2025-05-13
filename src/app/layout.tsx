@@ -1,5 +1,4 @@
 import ApolloClientProvider from "./Providers/ApolloClientProvider";
-import { Press_Start_2P } from "next/font/google";
 import "./globals.css";
 
 export const metadata = {
