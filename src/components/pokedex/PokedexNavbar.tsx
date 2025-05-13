@@ -6,11 +6,10 @@ import ArrowRight from "../../../public/icons/arrow-right-box.svg";
 interface Props {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function PokedexNavbar({ page, setPage, name, setName }: Props) {
+export default function PokedexNavbar({ page, setPage, setName }: Props) {
   const [tempName, setTempName] = useState("");
   const handlePrev = () => {
     if (page > 1) setPage(page - 1);
@@ -23,14 +22,14 @@ export default function PokedexNavbar({ page, setPage, name, setName }: Props) {
   };
 
   return (
-    <div className="flex gap-5 p-8 text-background border-b-4 border-background">
+    <div className="flex gap-5 p-8 text-background border-t-4 border-background">
       <div className="flex text-xl items-center gap-2">
         <div className="flex flex-col">
           <input
             type="text"
             placeholder="Enter pokemon name"
             onChange={(e) => setTempName(e.target.value)}
-            className="border-2 rounded-xl p-2"
+            className="border-2 rounded-xl p-2 font-extrabold"
           />
         </div>
         <button

@@ -4,6 +4,8 @@
   --color-background: #171717;
   --color-foreground: #E42A3B;
   --color-screen: #668CFF;
+  --color-accent: #fde68a;
+  --color-metal: #DEDEDE;
 }
 
 .attribute {
@@ -15,9 +17,27 @@
 .value {
   font-weight: bolder;
   font-size: .75rem;
-  color: var(--color-foreground);
+  color: var(--color-accent);
 }
 
 .custom-border {
+  border-radius: 6px;
   border: 1px solid color-mix(in oklab, var(--color-foreground) 30%, transparent);
+}
+
+.custom-border-bottom {
+  border-bottom: 1px solid color-mix(in oklab, var(--color-foreground) 20%, transparent);
+  padding-bottom: 8px;
+}
+
+.custom-border-top {
+  border-top: 1px solid color-mix(in oklab, var(--color-foreground) 20%, transparent);
+  padding-top: 8px;
+}
+
+.mini-container {
+  width: 100%;
+  font-size: 0.75rem;
+  padding-bottom: 8px;
+  height: 100%;
 }

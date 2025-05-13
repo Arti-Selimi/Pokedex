@@ -10,14 +10,17 @@ import PokedexNavbar from "./PokedexNavbar";
 interface Props {}
 
 export default function Pokedex({}: Props) {
-  const [name, setName] = useState("")
+  const [name, setName] = useState("");
   const [page, setPage] = useState(1);
   const variables = name
-  ? { limit: 1, name: `%${name}%` }
-  : { limit: 1, offset: page - 1 };
-  const { loading, error, data } = useQuery(name ? GET_POKEMON_BY_NAME : GET_POKEMON_BY_ID, {
-    variables: variables,
-  });
+    ? { limit: 1, name: `%${name}%` }
+    : { limit: 1, offset: page - 1 };
+  const { loading, error, data } = useQuery(
+    name ? GET_POKEMON_BY_NAME : GET_POKEMON_BY_ID,
+    {
+      variables: variables,
+    }
+  );
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -52,15 +55,24 @@ export default function Pokedex({}: Props) {
           <div className="w-3 h-3 bg-green-700 rounded-full border-[1.5px] border-black shadow" />
         </div>
       </div>
-      <PokedexNavbar page={page} setPage={setPage} name={name} setName={setName} />
-      <div className="flex flex-col gap-8 p-8">
-        {data.pokemon_v2_pokemon.map((raw: RawPokemon) => {
-          const pokemon = mapPokemon(raw);
-          return <PokedexCard key={pokemon.id} pokemon={pokemon} setPage={setPage} />;
-        })}
+      <div className="flex items-center justify-center p-8">
+        <div className="flex flex-col items-center justify-start px-10 bg-metal w-full rounded-bl-3xl border-4 border-background">
+          <div className="flex w-full gap-10 items-center justify-center p-4">
+            <div className="w-3 h-3 rounded-full bg-foreground border-2 border-background"></div>
+            <div className="w-3 h-3 rounded-full bg-foreground border-2 border-background"></div>
+          </div>
+          <div className="w-full">
+            {data.pokemon_v2_pokemon.map((raw: RawPokemon) => {
+              const pokemon = mapPokemon(raw);
+              return <PokedexCard key={pokemon.id} pokemon={pokemon} />;
+            })}
+          </div>
+          <div className="flex w-full gap-10 items-center justify-between py-4">
+            <div className="w-5 h-5 rounded-full bg-foreground border-2 border-background"></div>
+          </div>
+        </div>
       </div>
-
-      <div className="h-10"></div>
+      <PokedexNavbar page={page} setPage={setPage} setName={setName} />
     </div>
   );
 }
