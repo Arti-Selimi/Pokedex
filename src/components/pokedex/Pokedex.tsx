@@ -1,8 +1,8 @@
 "use client";
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_POKEMON } from "@/api/FetchPokemon";
+import { GET_POKEMON_BY_ID, GET_POKEMON_BY_NAME } from "@/api/FetchPokemon";
 import PokedexCard from "./PokedexCard";
 import { Pokemon, RawPokemon } from "@/types/pokemon";
 import PokedexNavbar from "./PokedexNavbar";
@@ -10,10 +10,14 @@ import PokedexNavbar from "./PokedexNavbar";
 interface Props {}
 
 export default function Pokedex({}: Props) {
-    const [page, setPage] = useState(1);
-    const { loading, error, data } = useQuery(GET_POKEMON, {
-      variables: { limit: 1, offset: page - 1 }, 
-    });
+  const [name, setName] = useState("")
+  const [page, setPage] = useState(1);
+  const variables = name
+  ? { limit: 1, name: `%${name}%` }
+  : { limit: 1, offset: page - 1 };
+  const { loading, error, data } = useQuery(name ? GET_POKEMON_BY_NAME : GET_POKEMON_BY_ID, {
+    variables: variables,
+  });
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -39,7 +43,7 @@ export default function Pokedex({}: Props) {
   }
 
   return (
-    <div className="flex flex-col lg:w-full bg-red-600 text-white rounded-3xl shadow-[inset_0_0_10px_rgba(0,0,0,0.5)] border-4 border-black">
+    <div className="flex flex-col lg:w-full h-full bg-red-600 text-white rounded-3xl shadow-[inset_0_0_10px_rgba(0,0,0,0.5)] border-4 border-black">
       <div className="flex gap-5 border-b-4 border-black p-8">
         <div className="bg-blue-400 rounded-full h-10 w-10 border-[3px] border-white shadow-[inset_0_0_5px_rgba(0,0,0,0.3)]"></div>
         <div className="flex gap-2 pt-2">
@@ -48,11 +52,11 @@ export default function Pokedex({}: Props) {
           <div className="w-3 h-3 bg-green-700 rounded-full border-[1.5px] border-black shadow" />
         </div>
       </div>
-      <PokedexNavbar page={page} setPage={setPage} />
+      <PokedexNavbar page={page} setPage={setPage} name={name} setName={setName} />
       <div className="flex flex-col gap-8 p-8">
         {data.pokemon_v2_pokemon.map((raw: RawPokemon) => {
           const pokemon = mapPokemon(raw);
-          return <PokedexCard key={pokemon.id} pokemon={pokemon} />;
+          return <PokedexCard key={pokemon.id} pokemon={pokemon} setPage={setPage} />;
         })}
       </div>
 
