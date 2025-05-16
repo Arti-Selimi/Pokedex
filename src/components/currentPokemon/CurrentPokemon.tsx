@@ -5,7 +5,7 @@ import React from "react";
 interface FightingPokemon {
   id: string;
   pokemon: Pokemon;
-  health: number;
+  health: number | null;
   handleTurn: (
     move: { name: string; power: number; accuracy: number },
     powerTaker: string
