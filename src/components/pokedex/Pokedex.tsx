@@ -23,22 +23,16 @@ export default function Pokedex() {
     }
   );
 
-  // if (loading)
-  //   return (
-  //     <div className="centered">
-  //       <Image src={LoadingGif} alt="LoadingGif" />
-  //     </div>
-  //   );
-  if (error) return <div>Error</div>;
+  if (error) console.log(error);
 
   return (
     <div className="flex flex-col lg:w-full h-full bg-red-600 text-white rounded-3xl shadow-[inset_0_0_10px_rgba(0,0,0,0.5)] border-4 border-black">
       <div className="flex gap-5 border-b-4 border-black p-8">
-        <div className="bg-blue-400 rounded-full h-10 w-10 border-[3px] border-white shadow-[inset_0_0_5px_rgba(0,0,0,0.3)]"></div>
+        <div className="bg-blue-400 rounded-full h-10 w-10 border-2 border-white shadow-[inset_0_0_5px_rgba(0,0,0,0.3)]"></div>
         <div className="flex gap-2 pt-2">
-          <div className="w-3 h-3 bg-red-800 rounded-full border-[1.5px] border-black shadow" />
-          <div className="w-3 h-3 bg-yellow-400 rounded-full border-[1.5px] border-black shadow" />
-          <div className="w-3 h-3 bg-green-700 rounded-full border-[1.5px] border-black shadow" />
+          <div className="w-3 h-3 bg-red-800 rounded-full border-1 border-black shadow" />
+          <div className="w-3 h-3 bg-yellow-400 rounded-full border-1 border-black shadow" />
+          <div className="w-3 h-3 bg-green-700 rounded-full border-1 border-black shadow" />
         </div>
       </div>
       <div className="flex items-center justify-center p-8">
@@ -52,6 +46,15 @@ export default function Pokedex() {
               {loading ? (
                 <div className="centered">
                   <Image src={LoadingGif} alt="LoadingGif" />
+                </div>
+              ) : data?.pokemon_v2_pokemon?.length === 0 ? (
+                <div className="flex flex-col items-center text-center p-10 gap-4">
+                  <h1 className="text-3xl">ERROR</h1>
+                  <p>
+                    Sorry user, no pokemon could be found with that name, please
+                    try a different name or just use the pagination buttons on
+                    the right side of the input
+                  </p>
                 </div>
               ) : (
                 data.pokemon_v2_pokemon.map((raw: RawPokemon) => {

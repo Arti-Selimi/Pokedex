@@ -10,13 +10,13 @@ interface Props {
 }
 
 export default function PokedexCard({ pokemon }: Props) {
+  console.log("arto")
   return (
     <>
       <div className="flex-1">
         <Image
           src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
           alt={pokemon.name}
-          className="rounded-xl object-contain"
           objectFit="fit"
           width={200}
           height={200}
