@@ -1,6 +1,7 @@
 import { Pokemon } from "@/types/pokemon";
 import Image from "next/image";
-import React from "react";
+import React, { useRef } from "react";
+import { CanDemoMove } from "@/functions/Fightingfunctions";
 
 interface FightingPokemon {
   id: string;
@@ -12,6 +13,7 @@ interface FightingPokemon {
   ) => void;
   className?: string;
   imgClassName?: string;
+  turn?: number;
 }
 
 export default function CurrentPokemon({
@@ -21,7 +23,31 @@ export default function CurrentPokemon({
   handleTurn,
   className,
   imgClassName,
+  turn = 0,
 }: FightingPokemon) {
+  const hasMoved = useRef(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const prevTurn = useRef(turn);
+
+  const executeAutomaticMove = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    if (id === "static" && turn === 1 && !hasMoved.current) {
+      CanDemoMove(hasMoved, timerRef, pokemon, handleTurn);
+    }
+
+    if (turn === 0 && hasMoved.current) {
+      hasMoved.current = false;
+    }
+  };
+
+  if (prevTurn.current !== turn) {
+    executeAutomaticMove();
+    prevTurn.current = turn;
+  }
+
   return (
     <div className={`flex flex-col m-auto p-4 w-fit gap-2 ${className}`}>
       <Image
@@ -39,30 +65,27 @@ export default function CurrentPokemon({
       <div className="flex flex-col gap-2 p-4 custom-border">
         <span className="my-4">Abilities:</span>
         <div className="grid grid-cols-2 gap-4">
-          {pokemon.moves.map((m, i) => {
-            return (
-              <div
-                onClick={() =>
-                  handleTurn(
-                    {
-                      name: m.name,
-                      power: m.power ?? 0,
-                      accuracy: m.accuracy ?? 100,
-                    },
-                    id === "dynamic" ? "health" : "staticHealth"
-                  )
-                }
-                className="w-full flex flex-col bg-foreground text-background p-2 custom-border cursor-pointer"
-              >
-                <span className="capitalize" key={i}>
-                  {m.name}
-                </span>
-                <span className="value">
-                  {m.power} {m.power === null ? "Status move" : "Power"}
-                </span>
-              </div>
-            );
-          })}
+          {pokemon.moves.map((m, i) => (
+            <div
+              key={i}
+              onClick={() =>
+                handleTurn(
+                  {
+                    name: m.name,
+                    power: m.power ?? 0,
+                    accuracy: m.accuracy ?? 100,
+                  },
+                  "health"
+                )
+              }
+              className="w-full flex flex-col bg-foreground text-background p-2 custom-border cursor-pointer"
+            >
+              <span className="capitalize">{m.name}</span>
+              <span className="value">
+                {m.power ?? "Status move"} {m.power !== null && "Power"}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

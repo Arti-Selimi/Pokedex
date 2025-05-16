@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@apollo/client";
-import { GET_POKEMON_BY_ID, GET_POKEMON_BY_NAME } from "@/api/FetchPokemon";
+import { GET_POKEMON_BY_ID } from "@/api/FetchPokemon";
 import mapPokemon from "@/functions/functions";
 import CurrentPokemon from "@/components/currentPokemon/CurrentPokemon";
 import SoftAlert from "@/components/alert/SoftAlert";
@@ -27,12 +27,15 @@ export default function FightingPage() {
     variables: { limit: 1, offset: id - 1 },
   });
 
+  const [staticDemoID] = useState(() => Math.floor(Math.random() * 101) + 1);
+
+
   const {
     data: staticData,
     loading: staticLoading,
     error: staticError,
-  } = useQuery(GET_POKEMON_BY_NAME, {
-    variables: { limit: 1, name: "Bulbasaur" },
+  } = useQuery(GET_POKEMON_BY_ID, {
+    variables: { limit: 1, offset:  staticDemoID - 1 },
   });
 
   if (loading || staticLoading) return <Loading />;
@@ -93,6 +96,7 @@ export default function FightingPage() {
         pokemon={staticPokemon}
         className="items-end"
         imgClassName="rotate-180 rotate-x-180"
+        turn={turn}
       />
     </div>
   );

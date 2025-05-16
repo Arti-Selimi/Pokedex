@@ -25,8 +25,8 @@ interface pokemonSpecy {
 
 interface PokemonMove {
   name: string;
-  power: number | null;
-  accuracy: number | null;
+  power: number;
+  accuracy: number;
 }
 export interface Pokemon {
   id: number;
