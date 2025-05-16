@@ -13,15 +13,13 @@ interface Props {
 export default function PokedexCard({ pokemon }: Props) {
   return (
     <>
-      <div className="flex-1">
-        <Image
-          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
-          alt={pokemon.name}
-          objectFit="fit"
-          width={200}
-          height={200}
-        />
-      </div>
+      <Image
+        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
+        alt={pokemon.name}
+        width={200}
+        height={200}
+        className="w-[200px] h-[200px]"
+      />
       <div className="grid grid-cols-1 gap-1 w-full">
         <div className="flex flex-col flex-1 gap-1 min-h-full bg-background custom-border p-2 text-xs shadow-inner">
           <h1 className="text-sm font-bold text-center uppercase custom-border-bottom">
@@ -103,8 +101,8 @@ export default function PokedexCard({ pokemon }: Props) {
           </div>
         </div>
         <Link href={`/Fighting?id=${pokemon.id}`} className="link">
-            Try out in a Pokemon battle!
-          </Link>
+          Try out in a Pokemon battle!
+        </Link>
       </div>
     </>
   );

@@ -41,7 +41,7 @@ export default function Pokedex() {
             <div className="w-3 h-3 rounded-full bg-foreground border-2 border-background"></div>
           </div>
           <div className="w-full">
-            <div className="flex flex-col items-center min-w-full gap-1 p-2 bg-background text-foreground rounded-2xl shadow-lg border border-foreground max-w-md">
+            <div className="flex flex-col items-center min-w-full gap-1 p-2 bg-background text-foreground rounded-[5px] shadow-lg border border-foreground max-w-md">
               {loading ? (
                 <Loading />
               ) : data?.pokemon_v2_pokemon?.length === 0 ? (

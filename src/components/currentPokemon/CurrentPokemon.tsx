@@ -53,7 +53,7 @@ export default function CurrentPokemon({
       <Image
         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
         alt={pokemon.name}
-        className={`${imgClassName}`}
+        className={`${imgClassName} w-[200px] h-[200px]`}
         width={200}
         height={200}
       />
