@@ -34,6 +34,13 @@ export const GET_POKEMON_BY_ID = gql`
           }
         }
       }
+      pokemon_v2_pokemonmoves {
+        pokemon_v2_move {
+          name
+          power
+          accuracy
+        }
+      }
     }
   }
 `;
@@ -70,6 +77,13 @@ export const GET_POKEMON_BY_NAME = gql`
           pokemon_v2_language {
             name
           }
+        }
+      }
+      pokemon_v2_pokemonmoves {
+        pokemon_v2_move {
+          name
+          power
+          accuracy
         }
       }
     }

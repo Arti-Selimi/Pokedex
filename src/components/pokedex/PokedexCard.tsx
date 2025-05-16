@@ -4,13 +4,13 @@ import Image from "next/image";
 import Chat from "../chat/chat";
 import Ash from "../../../public/Ash.png";
 import { Pointer } from "../chat/pointer";
+import Link from "next/link";
 
 interface Props {
   pokemon: Pokemon;
 }
 
 export default function PokedexCard({ pokemon }: Props) {
-  console.log("arto")
   return (
     <>
       <div className="flex-1">
@@ -100,6 +100,9 @@ export default function PokedexCard({ pokemon }: Props) {
               </div>
             </div>
           </div>
+          <Link href={`/Fighting?id=${pokemon.id}`}>
+            Try Fighting with this Pokémon!
+          </Link>
         </div>
       </div>
     </>
