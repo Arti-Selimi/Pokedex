@@ -1,5 +1,3 @@
-
-
   interface PokemonStats {
     base_stat: number;
     stat: {
@@ -18,6 +16,12 @@
       name: string;
     };
   }
+
+  interface pokemonSpecy {
+    flavorTexts: {
+      flavorText: string;
+    }
+  }
   export interface Pokemon {
     id: number;
     name: string;
@@ -27,6 +31,7 @@
     types: PokemonType[];
     abilities: PokemonAbility[];
     stats: PokemonStats[];
+    description: string;
   }
 
   export interface RawPokemon {
@@ -51,5 +56,13 @@
         name: string;
       };
     }[];
+    pokemon_v2_pokemonspecy: {
+      pokemon_v2_pokemonspeciesflavortexts: {
+        flavor_text: string;
+        pokemon_v2_language: {
+          name: string;
+        };
+      }[];
+    };
   }
   

@@ -1,12 +1,16 @@
 import React from "react";
 import { Pokemon } from "@/types/pokemon";
 import Image from "next/image";
+import Chat from "../chat/chat";
+import Ash from "../../../public/Ash.png";
+import { Pointer } from "../chat/pointer";
 
 interface Props {
   pokemon: Pokemon;
 }
 
 export default function PokedexCard({ pokemon }: Props) {
+  console.log(pokemon)
   return (
     <div className="flex flex-col items-center min-w-full gap-6 p-4 bg-background text-foreground rounded-2xl shadow-lg border border-foreground max-w-md">
       <div className="flex-1">
@@ -14,11 +18,12 @@ export default function PokedexCard({ pokemon }: Props) {
           src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
           alt={pokemon.name}
           className="rounded-xl object-contain"
+          objectFit="fit"
           width={200}
           height={200}
         />
       </div>
-      <div className="grid grid-cols-1 gap-1">
+      <div className="grid grid-cols-1 gap-1 w-full">
         <div className="flex flex-col flex-1 gap-2 min-h-full bg-background custom-border p-2 text-xs shadow-inner">
           <h1 className="text-sm font-bold text-center uppercase custom-border-bottom">
             Pokemon name:{" "}
@@ -27,33 +32,35 @@ export default function PokedexCard({ pokemon }: Props) {
             </span>
           </h1>
           <div className="grid grid-cols-2">
-            <div className="mini-container flex flex-col items-start justify-between">
+            <div className="mini-container">
               <span className="attribute">Types:</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col gap-2">
                 {pokemon.types.map((t, i) => {
                   return (
-                    <span className="value capitalize" key={i}>
-                      {t.type.name}
+                    <span className="value capitalize pl-1" key={i}>
+                      - {t.type.name}
                     </span>
                   );
                 })}
               </div>
             </div>
-            <div className="mini-container flex flex-col items-start justify-between">
+            <div className="mini-container">
               <span className="attribute">Abilities:</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col gap-2">
                 {pokemon.abilities.map((a, i) => {
                   return (
-                    <span className="value capitalize" key={i}>
-                      {a.ability.name}
+                    <span className="value capitalize pl-1" key={i}>
+                      - {a.ability.name}
                     </span>
                   );
                 })}
               </div>
             </div>
             <div className="flex flex-col  custom-border-top col-span-2">
-              <span className="attribute custom-border-bottom w-min">Stats:</span>
-              <div className="grid grid-cols-2  gap-2 mini-container py-2">
+              <span className="attribute custom-border-bottom w-min">
+                Stats:
+              </span>
+              <div className="grid grid-cols-2 gap-2 py-2">
                 {pokemon.stats.map((s, i) => {
                   return (
                     <div key={i}>
@@ -75,11 +82,22 @@ export default function PokedexCard({ pokemon }: Props) {
           <div className="grid grid-cols-2 gap-10">
             <div className="flex items-center justify-center gap-1">
               <span className="attribute">Height: </span>
-              <span className="value">{pokemon.height}</span>
+              <span className="value">{pokemon.height} f</span>
             </div>
             <div className="flex items-center justify-center gap-1">
               <span className="attribute">Weight: </span>
-              <span className="value">{pokemon.weight}</span>
+              <span className="value">{pokemon.weight} lbs</span>
+            </div>
+            <div className="col-span-2 flex items-center justify-center">
+            <div className="flex items-center justify-center">
+              <Image src={Ash} alt="Ash" width={200} height={100} />
+              <Pointer 
+                position="left-2"
+              />
+            </div>
+            <div>
+              <Chat title="Strange Fact!" content={`${pokemon.description}`} />
+            </div>
             </div>
           </div>
         </div>

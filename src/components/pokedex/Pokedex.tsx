@@ -4,12 +4,13 @@ import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_POKEMON_BY_ID, GET_POKEMON_BY_NAME } from "@/api/FetchPokemon";
 import PokedexCard from "./PokedexCard";
-import { Pokemon, RawPokemon } from "@/types/pokemon";
 import PokedexNavbar from "./PokedexNavbar";
+import { RawPokemon } from "@/types/pokemon";
+import mapPokemon from "@/functions/functions";
+import LoadingGif from "../../../public/loading.gif";
+import Image from "next/image";
 
-interface Props {}
-
-export default function Pokedex({}: Props) {
+export default function Pokedex() {
   const [name, setName] = useState("");
   const [page, setPage] = useState(1);
   const variables = name
@@ -22,28 +23,13 @@ export default function Pokedex({}: Props) {
     }
   );
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  function mapPokemon(rawPokemon: RawPokemon): Pokemon {
-    return {
-      id: rawPokemon.id,
-      name: rawPokemon.name,
-      height: rawPokemon.height,
-      weight: rawPokemon.weight,
-      base_experience: rawPokemon.base_experience,
-      types: rawPokemon.pokemon_v2_pokemontypes.map((t) => ({
-        type: { name: t.pokemon_v2_type.name },
-      })),
-      abilities: rawPokemon.pokemon_v2_pokemonabilities.map((a) => ({
-        ability: { name: a.pokemon_v2_ability.name },
-      })),
-      stats: rawPokemon.pokemon_v2_pokemonstats.map((s) => ({
-        base_stat: s.base_stat,
-        stat: { name: s.pokemon_v2_stat.name },
-      })),
-    };
-  }
+  if (loading)
+    return (
+      <div className="centered">
+        <Image src={LoadingGif} alt="LoadingGif" />
+      </div>
+    );
+  if (error) return <div>Error</div>;
 
   return (
     <div className="flex flex-col lg:w-full h-full bg-red-600 text-white rounded-3xl shadow-[inset_0_0_10px_rgba(0,0,0,0.5)] border-4 border-black">

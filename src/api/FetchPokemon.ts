@@ -14,7 +14,7 @@ export const GET_POKEMON_BY_ID = gql`
         }
       }
       pokemon_v2_pokemonabilities {
-            pokemon_v2_ability {
+        pokemon_v2_ability {
           name
         }
       }
@@ -24,17 +24,23 @@ export const GET_POKEMON_BY_ID = gql`
           name
         }
       }
+      pokemon_v2_pokemonspecy {
+        pokemon_v2_pokemonspeciesflavortexts(
+          where: { language_id: { _eq: 9 } }
+        ) {
+          flavor_text
+          pokemon_v2_language {
+            name
+          }
+        }
+      }
     }
   }
 `;
 
-
 export const GET_POKEMON_BY_NAME = gql`
   query GetPokemonPage($limit: Int!, $name: String!) {
-    pokemon_v2_pokemon(
-      limit: $limit
-      where: { name: { _ilike: $name } }
-    ) {
+    pokemon_v2_pokemon(limit: $limit, where: { name: { _ilike: $name } }) {
       id
       name
       height
@@ -54,6 +60,16 @@ export const GET_POKEMON_BY_NAME = gql`
         base_stat
         pokemon_v2_stat {
           name
+        }
+      }
+      pokemon_v2_pokemonspecy {
+        pokemon_v2_pokemonspeciesflavortexts(
+          where: { language_id: { _eq: 9 } }
+        ) {
+          flavor_text
+          pokemon_v2_language {
+            name
+          }
         }
       }
     }

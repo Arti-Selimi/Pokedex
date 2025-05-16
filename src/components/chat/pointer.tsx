@@ -1,5 +1,9 @@
-export const Pointer = () => {
+interface Props {
+  position: string;
+}
+
+export const Pointer = ({position}: Props) => {
     return (
-      <div className="w-4 h-4 bg-white rotate-45 relative -top-2 left-30 z-0" />
+      <div className={`w-4 h-4 bg-foreground rotate-45 relative ${position} z-0`} />
     );
   };
