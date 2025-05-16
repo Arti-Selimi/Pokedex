@@ -23,12 +23,12 @@ export default function Pokedex() {
     }
   );
 
-  if (loading)
-    return (
-      <div className="centered">
-        <Image src={LoadingGif} alt="LoadingGif" />
-      </div>
-    );
+  // if (loading)
+  //   return (
+  //     <div className="centered">
+  //       <Image src={LoadingGif} alt="LoadingGif" />
+  //     </div>
+  //   );
   if (error) return <div>Error</div>;
 
   return (
@@ -48,10 +48,18 @@ export default function Pokedex() {
             <div className="w-3 h-3 rounded-full bg-foreground border-2 border-background"></div>
           </div>
           <div className="w-full">
-            {data.pokemon_v2_pokemon.map((raw: RawPokemon) => {
-              const pokemon = mapPokemon(raw);
-              return <PokedexCard key={pokemon.id} pokemon={pokemon} />;
-            })}
+            <div className="flex flex-col items-center min-w-full gap-6 p-4 bg-background text-foreground rounded-2xl shadow-lg border border-foreground max-w-md">
+              {loading ? (
+                <div className="centered">
+                  <Image src={LoadingGif} alt="LoadingGif" />
+                </div>
+              ) : (
+                data.pokemon_v2_pokemon.map((raw: RawPokemon) => {
+                  const pokemon = mapPokemon(raw);
+                  return <PokedexCard key={pokemon.id} pokemon={pokemon} />;
+                })
+              )}
+            </div>
           </div>
           <div className="flex w-full gap-10 items-center justify-between py-4">
             <div className="w-5 h-5 rounded-full bg-foreground border-2 border-background"></div>

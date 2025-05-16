@@ -10,9 +10,8 @@ interface Props {
 }
 
 export default function PokedexCard({ pokemon }: Props) {
-  console.log(pokemon)
   return (
-    <div className="flex flex-col items-center min-w-full gap-6 p-4 bg-background text-foreground rounded-2xl shadow-lg border border-foreground max-w-md">
+    <>
       <div className="flex-1">
         <Image
           src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
@@ -89,19 +88,20 @@ export default function PokedexCard({ pokemon }: Props) {
               <span className="value">{pokemon.weight} lbs</span>
             </div>
             <div className="col-span-2 flex items-center justify-center">
-            <div className="flex items-center justify-center">
-              <Image src={Ash} alt="Ash" width={200} height={100} />
-              <Pointer 
-                position="left-2"
-              />
-            </div>
-            <div>
-              <Chat title="Strange Fact!" content={`${pokemon.description}`} />
-            </div>
+              <div className="flex items-center justify-center">
+                <Image src={Ash} alt="Ash" width={200} height={100} />
+                <Pointer position="left-2" />
+              </div>
+              <div>
+                <Chat
+                  title="Strange Fact!"
+                  content={`${pokemon.description}`}
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
