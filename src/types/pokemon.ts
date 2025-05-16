@@ -41,6 +41,12 @@ export interface Pokemon {
   moves: PokemonMove[];
 }
 
+export interface FightingPokemon extends Pokemon {
+  health: number,
+  className?: string,
+  imgClassName?: string,
+}
+
 export interface RawPokemon {
   id: number;
   name: string;

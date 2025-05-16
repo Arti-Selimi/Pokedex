@@ -100,10 +100,10 @@ export default function PokedexCard({ pokemon }: Props) {
               </div>
             </div>
           </div>
-          <Link href={`/Fighting?id=${pokemon.id}`}>
-            Try Fighting with this Pokémon!
-          </Link>
         </div>
+        <Link href={`/Fighting?id=${pokemon.id}`} className="link">
+            Try Out!
+          </Link>
       </div>
     </>
   );

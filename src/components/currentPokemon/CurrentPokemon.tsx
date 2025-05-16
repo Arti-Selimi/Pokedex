@@ -1,20 +1,27 @@
 import { Pokemon } from "@/types/pokemon";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 
-type Props = {
+interface FightingPokemon {
+  id: string;
   pokemon: Pokemon;
+  health: number;
+  handleTurn: (
+    move: { name: string; power: number; accuracy: number },
+    powerTaker: string
+  ) => void;
   className?: string;
   imgClassName?: string;
-};
+}
 
 export default function CurrentPokemon({
+  id,
   pokemon,
+  health,
+  handleTurn,
   className,
   imgClassName,
-}: Props) {
-  const [health, setHealth] = useState(pokemon.stats[0].base_stat);
-
+}: FightingPokemon) {
   return (
     <div className={`flex flex-col m-auto p-4 w-fit gap-2 ${className}`}>
       <Image
@@ -34,12 +41,24 @@ export default function CurrentPokemon({
         <div className="grid grid-cols-2 gap-4">
           {pokemon.moves.map((m, i) => {
             return (
-              <div className="w-full flex flex-col bg-foreground text-background p-2 custom-border cursor-pointer">
+              <div
+                onClick={() =>
+                  handleTurn(
+                    {
+                      name: m.name,
+                      power: m.power ?? 0,
+                      accuracy: m.accuracy ?? 100,
+                    },
+                    id === "dynamic" ? "health" : "staticHealth"
+                  )
+                }
+                className="w-full flex flex-col bg-foreground text-background p-2 custom-border cursor-pointer"
+              >
                 <span className="capitalize" key={i}>
                   {m.name}
                 </span>
                 <span className="value">
-                  {m.power} {m.power === null ? "Status move" : "Damage"}
+                  {m.power} {m.power === null ? "Status move" : "Power"}
                 </span>
               </div>
             );

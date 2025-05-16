@@ -61,3 +61,12 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.link {
+  padding: 1rem;
+  background: var(--color-foreground);
+  color: var(--color-background);
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+}
