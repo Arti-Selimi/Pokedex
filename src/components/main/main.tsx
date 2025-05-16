@@ -6,7 +6,7 @@ import Pokedex from "../pokedex/Pokedex";
 
 export const Main = () => {
   return (
-    <div className="flex flex-col xl:flex-row gap-20 p-20">
+    <div className="flex flex-col xl:flex-row gap-20 p-5">
       <div>
         <Chat
           title="Welcome Trainer!"

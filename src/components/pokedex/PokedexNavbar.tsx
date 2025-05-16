@@ -22,8 +22,8 @@ export default function PokedexNavbar({ page, setPage, setName }: Props) {
   };
 
   return (
-    <div className="flex gap-5 p-8 text-background border-t-4 border-background">
-      <div className="flex text-xl items-center gap-2">
+    <div className="flex gap-5 p-4 text-background border-t-4 border-background">
+      <div className="flex text-sm items-center gap-2">
         <div className="flex flex-col">
           <input
             type="text"

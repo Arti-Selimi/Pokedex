@@ -63,10 +63,10 @@ body {
 }
 
 .link {
-  padding: 1rem;
+  padding: .5rem;
   background: var(--color-foreground);
   color: var(--color-background);
-  font-size: 1rem;
+  font-size: .75rem;
   font-weight: bold;
   border-radius: 4px;
 }

@@ -23,7 +23,7 @@ export default function PokedexCard({ pokemon }: Props) {
         />
       </div>
       <div className="grid grid-cols-1 gap-1 w-full">
-        <div className="flex flex-col flex-1 gap-2 min-h-full bg-background custom-border p-2 text-xs shadow-inner">
+        <div className="flex flex-col flex-1 gap-1 min-h-full bg-background custom-border p-2 text-xs shadow-inner">
           <h1 className="text-sm font-bold text-center uppercase custom-border-bottom">
             Pokemon name:{" "}
             <span className="font-extrabold uppercase tracking-wide text-yellow-300 drop-shadow-md">
@@ -78,7 +78,7 @@ export default function PokedexCard({ pokemon }: Props) {
           <h1 className="text-sm font-bold uppercase text-center custom-border-bottom">
             More Info
           </h1>
-          <div className="grid grid-cols-2 gap-10">
+          <div className="grid grid-cols-2 gap-2">
             <div className="flex items-center justify-center gap-1">
               <span className="attribute">Height: </span>
               <span className="value">{pokemon.height} f</span>
@@ -89,20 +89,21 @@ export default function PokedexCard({ pokemon }: Props) {
             </div>
             <div className="col-span-2 flex items-center justify-center">
               <div className="flex items-center justify-center">
-                <Image src={Ash} alt="Ash" width={200} height={100} />
+                <Image src={Ash} alt="Ash" width={150} height={150} />
                 <Pointer position="left-2" />
               </div>
               <div>
                 <Chat
                   title="Strange Fact!"
                   content={`${pokemon.description}`}
+                  className="h-min!"
                 />
               </div>
             </div>
           </div>
         </div>
         <Link href={`/Fighting?id=${pokemon.id}`} className="link">
-            Try Out!
+            Try out in a Pokemon battle!
           </Link>
       </div>
     </>

@@ -14,7 +14,9 @@ export const PlayerToDemo = (
   setTurn: SetTurn,
   move: Move
 ) => {
-  setStaticHealth((prev) => prev! - move?.power);
+  setStaticHealth((prev) =>
+    prev! - move?.power < 0 ? 0 : prev! - move?.power
+  );
   setAlertMessage(`You attacked with ${move.name} for ${move?.power} damage.`);
   setTimeout(() => setAlertMessage(null), 2000);
   setTurn(1);
@@ -26,7 +28,7 @@ export const DemoToPlayer = (
   setTurn: SetTurn,
   move: Move
 ) => {
-  setHealth((prev) => prev! - move?.power);
+  setHealth((prev) => (prev! - move?.power < 0 ? 0 : prev! - move?.power));
   setAlertMessage(
     `Enemy attacked with ${move.name} for ${move?.power} damage.`
   );

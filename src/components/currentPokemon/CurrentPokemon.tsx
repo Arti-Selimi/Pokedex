@@ -49,7 +49,7 @@ export default function CurrentPokemon({
   }
 
   return (
-    <div className={`flex flex-col m-auto p-4 w-fit gap-2 ${className}`}>
+    <div className={`flex flex-col m-auto p-2 w-fit gap-2 ${className}`}>
       <Image
         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`}
         alt={pokemon.name}
@@ -57,14 +57,14 @@ export default function CurrentPokemon({
         width={200}
         height={200}
       />
-      <h1 className="capitalize value text-2xl!">{pokemon.name}</h1>
-      <div className="flex flex-col gap-2 p-4 w-full custom-border">
+      <h1 className="capitalize value text-lg!">{pokemon.name}</h1>
+      <div className="flex flex-col gap-2 p-2 w-full custom-border">
         <span>Health: {health}</span>
         <span>Speed: {pokemon.stats[5].base_stat}</span>
       </div>
-      <div className="flex flex-col gap-2 p-4 custom-border">
+      <div className="flex flex-col gap-2 p-2 custom-border">
         <span className="my-4">Abilities:</span>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-2">
           {pokemon.moves.map((m, i) => (
             <div
               key={i}

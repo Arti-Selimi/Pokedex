@@ -20,6 +20,7 @@ export default function FightingPage() {
   const [staticHealth, setStaticHealth] = useState<number | null>(null);
   const [turn, setTurn] = useState<0 | 1>(0);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
+  const [gameOver, setGameOver] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const id = Number(searchParams.get("id"));
 
@@ -29,13 +30,12 @@ export default function FightingPage() {
 
   const [staticDemoID] = useState(() => Math.floor(Math.random() * 101) + 1);
 
-
   const {
     data: staticData,
     loading: staticLoading,
     error: staticError,
   } = useQuery(GET_POKEMON_BY_ID, {
-    variables: { limit: 1, offset:  staticDemoID - 1 },
+    variables: { limit: 1, offset: staticDemoID - 1 },
   });
 
   if (loading || staticLoading) return <Loading />;
@@ -51,26 +51,21 @@ export default function FightingPage() {
     move: { name: string; power: number; accuracy: number },
     damageTaker: string
   ) => {
-    console.log(move);
-    if (turn === 0) {
-      if (damageTaker === "health") {
-        PlayerToDemo(setStaticHealth, setAlertMessage, setTurn, move);
-      } else {
-        InvalidTurn(setAlertMessage);
-      }
+    if(gameOver) return
+    if (turn === 0 && damageTaker === "health") {
+      PlayerToDemo(setStaticHealth, setAlertMessage, setTurn, move);
+    } else if (turn === 1 && damageTaker === "staticHealth") {
+      DemoToPlayer(setHealth, setAlertMessage, setTurn, move);
     } else {
-      if (damageTaker === "health") {
-        InvalidTurn(setAlertMessage);
-      } else {
-        DemoToPlayer(setHealth, setAlertMessage, setTurn, move);
-      }
+      InvalidTurn(setAlertMessage);
     }
   };
 
+  if(health === 0 || staticHealth === 0 && gameOver === false) setGameOver(true)
+
   return (
     <div className="flex h-screen w-screen items-center justify-between">
-      {(health !== null && health <= 0) ||
-      (staticHealth !== null && staticHealth <= 0) ? (
+      {gameOver ? (
         <GameEndAlert
           winner={
             health !== null && health <= 0
@@ -80,7 +75,7 @@ export default function FightingPage() {
         />
       ) : null}
       {alertMessage && <SoftAlert content={alertMessage} />}
-      <div className="absolute top-10 left-1/2 transform -translate-x-1/2 border-2 border-black bg-foreground p-5 rounded-2xl text-accent text-2xl shadow-2xl">
+      <div className="absolute top-10 left-1/2 transform -translate-x-1/2 border-2 border-black bg-foreground p-5 rounded-2xl text-accent text-lg shadow-2xl">
         {turn === 0 ? "Your turn" : "Enemy turn"}
       </div>
       <CurrentPokemon
