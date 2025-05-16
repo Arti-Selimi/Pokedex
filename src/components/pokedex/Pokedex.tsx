@@ -7,8 +7,7 @@ import PokedexCard from "./PokedexCard";
 import PokedexNavbar from "./PokedexNavbar";
 import { RawPokemon } from "@/types/pokemon";
 import mapPokemon from "@/functions/functions";
-import LoadingGif from "../../../public/loading.gif";
-import Image from "next/image";
+import Loading from "../loading/Loading";
 
 export default function Pokedex() {
   const [name, setName] = useState("");
@@ -44,9 +43,7 @@ export default function Pokedex() {
           <div className="w-full">
             <div className="flex flex-col items-center min-w-full gap-6 p-4 bg-background text-foreground rounded-2xl shadow-lg border border-foreground max-w-md">
               {loading ? (
-                <div className="centered">
-                  <Image src={LoadingGif} alt="LoadingGif" />
-                </div>
+                <Loading />
               ) : data?.pokemon_v2_pokemon?.length === 0 ? (
                 <div className="flex flex-col items-center text-center p-10 gap-4">
                   <h1 className="text-3xl">ERROR</h1>

@@ -8,6 +8,12 @@ import mapPokemon from "@/functions/functions";
 import CurrentPokemon from "@/components/currentPokemon/CurrentPokemon";
 import SoftAlert from "@/components/alert/SoftAlert";
 import GameEndAlert from "@/components/alert/GameEndAlert";
+import {
+  PlayerToDemo,
+  DemoToPlayer,
+  InvalidTurn,
+} from "@/functions/Fightingfunctions";
+import Loading from "@/components/loading/Loading";
 
 export default function FightingPage() {
   const [health, setHealth] = useState<number | null>(null);
@@ -29,7 +35,7 @@ export default function FightingPage() {
     variables: { limit: 1, name: "Bulbasaur" },
   });
 
-  if (loading || staticLoading) return <p>Loading...</p>;
+  if (loading || staticLoading) return <Loading />;
   if (error || staticError) return <p>Error loading Pokémon</p>;
 
   const pokemon = mapPokemon(data.pokemon_v2_pokemon[0]);
@@ -38,10 +44,6 @@ export default function FightingPage() {
   if (health === null) setHealth(pokemon.stats[0].base_stat);
   if (staticHealth === null) setStaticHealth(staticPokemon.stats[0].base_stat);
 
-  if (health === null || staticHealth === null) {
-    return <p>Initializing health...</p>;
-  }
-
   const handleTurn = (
     move: { name: string; power: number; accuracy: number },
     damageTaker: string
@@ -49,26 +51,15 @@ export default function FightingPage() {
     console.log(move);
     if (turn === 0) {
       if (damageTaker === "health") {
-        setStaticHealth((prev) => prev! - move.power);
-        setAlertMessage(
-          `You attacked with ${move.name} for ${move.power} damage.`
-        );
-        setTimeout(() => setAlertMessage(null), 2000);
-        setTurn(1);
+        PlayerToDemo(setStaticHealth, setAlertMessage, setTurn, move);
       } else {
-        setAlertMessage("Not your turn, please wait for the other player.");
-        setTimeout(() => setAlertMessage(null), 2000);
+        InvalidTurn(setAlertMessage);
       }
     } else {
       if (damageTaker === "health") {
-        setAlertMessage("Not your turn, please wait for the other player.");
-        setTimeout(() => setAlertMessage(null), 2000);
+        InvalidTurn(setAlertMessage);
       } else {
-        setHealth((prev) => prev! - move.power);
-        setAlertMessage(
-          `Enemy attacked with ${move.name} for ${move.power} damage.`
-        );
-        setTurn(0);
+        DemoToPlayer(setHealth, setAlertMessage, setTurn, move);
       }
     }
   };
@@ -79,7 +70,9 @@ export default function FightingPage() {
       (staticHealth !== null && staticHealth <= 0) ? (
         <GameEndAlert
           winner={
-            health !== null && health <= 0 ? staticPokemon.name + "(computer)" : pokemon.name + "(you)"
+            health !== null && health <= 0
+              ? staticPokemon.name + "(computer)"
+              : pokemon.name + "(you)"
           }
         />
       ) : null}
