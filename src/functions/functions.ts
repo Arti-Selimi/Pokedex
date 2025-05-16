@@ -21,5 +21,10 @@ export default function mapPokemon(rawPokemon: RawPokemon): Pokemon {
       rawPokemon.pokemon_v2_pokemonspecy.pokemon_v2_pokemonspeciesflavortexts.find(
         (d) => d.pokemon_v2_language.name === "en"
       )?.flavor_text || "No description available",
+      moves: rawPokemon.pokemon_v2_pokemonmoves.slice(4, 8).map((m) => ({
+        name: m.pokemon_v2_move.name,
+        power: m.pokemon_v2_move.power,
+        accuracy: m.pokemon_v2_move.accuracy,
+      })),
   };
 }
