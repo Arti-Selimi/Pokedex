@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import ApolloClientProvider from "./Providers/ApolloClientProvider";
 import "./globals.css";
 
@@ -13,11 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={"antialiased bg-background text-white"}
-      >
+      <body className={"antialiased bg-background text-white"}>
         <ApolloClientProvider>
-          {children}
+          <Suspense>{children}</Suspense>
         </ApolloClientProvider>
       </body>
     </html>
