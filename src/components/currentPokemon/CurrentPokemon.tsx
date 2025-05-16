@@ -69,14 +69,16 @@ export default function CurrentPokemon({
             <div
               key={i}
               onClick={() =>
-                handleTurn(
-                  {
-                    name: m.name,
-                    power: m.power ?? 0,
-                    accuracy: m.accuracy ?? 100,
-                  },
-                  "health"
-                )
+                id === "static"
+                  ? "return"
+                  : handleTurn(
+                      {
+                        name: m.name,
+                        power: m.power ?? 0,
+                        accuracy: m.accuracy ?? 100,
+                      },
+                      "health"
+                    )
               }
               className="w-full flex flex-col bg-foreground text-background p-2 custom-border cursor-pointer"
             >
