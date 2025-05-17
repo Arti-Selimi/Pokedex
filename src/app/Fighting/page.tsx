@@ -61,10 +61,12 @@ export default function FightingPage() {
     }
   };
 
-  if(health === 0 || staticHealth === 0 && gameOver === false) setGameOver(true)
+  console.log(health === 0 || staticHealth === 0 && gameOver === false )
 
+  if((health === 0 || staticHealth === 0) && gameOver === false) setGameOver(true)
+  
   return (
-    <div className="flex h-screen w-screen items-center justify-between">
+    <div className="grid grid-cols-2 gap-100 px-10 h-screen w-screen">
       {gameOver ? (
         <GameEndAlert
           winner={
