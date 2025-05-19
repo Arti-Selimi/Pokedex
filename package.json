@@ -14,7 +14,8 @@
     "next": "15.3.2",
     "pixelarticons": "^1.8.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

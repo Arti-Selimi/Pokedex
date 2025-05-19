@@ -8,6 +8,7 @@ import PokedexNavbar from "./PokedexNavbar";
 import { RawPokemon } from "@/types/pokemon";
 import mapPokemon from "@/functions/functions";
 import Loading from "../loading/Loading";
+import { useGlobalStore } from "@/store/useGlobalStore";
 
 export default function Pokedex() {
   const [name, setName] = useState("");
@@ -22,8 +23,8 @@ export default function Pokedex() {
     }
   );
 
-  if (error) console.log(error);
-
+  if (error) return <div>Error: {error.message}</div>;
+  
   return (
     <div className="flex flex-col lg:w-full h-full bg-red-600 text-white rounded-3xl shadow-[inset_0_0_10px_rgba(0,0,0,0.5)] border-4 border-black">
       <div className="flex gap-2 border-b-4 border-black p-2">
@@ -52,6 +53,8 @@ export default function Pokedex() {
                     try a different name or just use the pagination buttons on
                     the right side of the input
                   </p>
+
+                  
                 </div>
               ) : (
                 data.pokemon_v2_pokemon.map((raw: RawPokemon) => {

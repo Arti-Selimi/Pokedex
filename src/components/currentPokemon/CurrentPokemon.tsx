@@ -1,7 +1,7 @@
 import { Pokemon } from "@/types/pokemon";
 import Image from "next/image";
 import React, { useRef } from "react";
-import { CanDemoMove } from "@/functions/Fightingfunctions";
+import { useGlobalStore } from "@/store/useGlobalStore";
 
 interface FightingPokemon {
   id: string;
@@ -29,13 +29,16 @@ export default function CurrentPokemon({
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const prevTurn = useRef(turn);
 
+  // ⬇️ pull canDemoMove from the Zustand store
+  const { canDemoMove } = useGlobalStore();
+
   const executeAutomaticMove = () => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
 
     if (id === "static" && turn === 1 && !hasMoved.current) {
-      CanDemoMove(hasMoved, timerRef, pokemon, handleTurn);
+      canDemoMove(hasMoved, timerRef, pokemon, handleTurn);
     }
 
     if (turn === 0 && hasMoved.current) {
@@ -60,7 +63,8 @@ export default function CurrentPokemon({
       <h1 className="capitalize value text-lg!">{pokemon.name}</h1>
       <div className="flex flex-col gap-2 p-2 w-full custom-border">
         <span>Health: {health}</span>
-        <span>Speed: {pokemon.stats[5].base_stat}</span>
+        <span>Attack: {pokemon.stats[1].base_stat}</span>
+        <span>Defense: {pokemon.stats[2].base_stat}</span>
       </div>
       <div className="flex flex-col w-full gap-2 p-2 custom-border">
         <span className="my-4">Abilities:</span>
@@ -70,7 +74,7 @@ export default function CurrentPokemon({
               key={i}
               onClick={() =>
                 id === "static"
-                  ? "return"
+                  ? null
                   : handleTurn(
                       {
                         name: m.name,

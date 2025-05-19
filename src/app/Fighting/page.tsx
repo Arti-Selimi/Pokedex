@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@apollo/client";
 import { GET_POKEMON_BY_ID } from "@/api/FetchPokemon";
@@ -8,19 +8,27 @@ import mapPokemon from "@/functions/functions";
 import CurrentPokemon from "@/components/currentPokemon/CurrentPokemon";
 import SoftAlert from "@/components/alert/SoftAlert";
 import GameEndAlert from "@/components/alert/GameEndAlert";
-import {
-  PlayerToDemo,
-  DemoToPlayer,
-  InvalidTurn,
-} from "@/functions/Fightingfunctions";
 import Loading from "@/components/loading/Loading";
+import { useGlobalStore } from "@/store/useGlobalStore";
 
 export default function FightingPage() {
-  const [health, setHealth] = useState<number | null>(null);
-  const [staticHealth, setStaticHealth] = useState<number | null>(null);
-  const [turn, setTurn] = useState<0 | 1>(0);
-  const [alertMessage, setAlertMessage] = useState<string | null>(null);
-  const [gameOver, setGameOver] = useState<boolean>(false);
+  const {
+    health,
+    staticHealth,
+    defense,
+    staticDefense,
+    turn,
+    alertMessage,
+    gameOver,
+    setHealth,
+    setStaticHealth,
+    setDefense,
+    setStaticDefense,
+    playerToDemo,
+    demoToPlayer,
+    invalidTurn,
+  } = useGlobalStore();
+
   const searchParams = useSearchParams();
   const id = Number(searchParams.get("id"));
 
@@ -28,7 +36,7 @@ export default function FightingPage() {
     variables: { limit: 1, offset: id - 1 },
   });
 
-  const [staticDemoID] = useState(() => Math.floor(Math.random() * 101) + 1);
+  const staticDemoID = useMemo(() => Math.floor(Math.random() * 101) + 1, []);
 
   const {
     data: staticData,
@@ -44,27 +52,29 @@ export default function FightingPage() {
   const pokemon = mapPokemon(data.pokemon_v2_pokemon[0]);
   const staticPokemon = mapPokemon(staticData.pokemon_v2_pokemon[0]);
 
-  if (health === null) setHealth(pokemon.stats[0].base_stat);
-  if (staticHealth === null) setStaticHealth(staticPokemon.stats[0].base_stat);
+  useEffect(() => {
+    if (!pokemon || !staticPokemon) return;
+  
+    if (health === null) setHealth(pokemon.stats[0].base_stat);
+    if (defense === null) setDefense(pokemon.stats[2].base_stat);
+    if (staticHealth === null) setStaticHealth(staticPokemon.stats[0].base_stat);
+    if (staticDefense === null) setStaticDefense(staticPokemon.stats[2].base_stat);
+  }, [pokemon, staticPokemon]);  
 
   const handleTurn = (
     move: { name: string; power: number; accuracy: number },
     damageTaker: string
   ) => {
-    if(gameOver) return
+    if (gameOver) return;
     if (turn === 0 && damageTaker === "health") {
-      PlayerToDemo(setStaticHealth, setAlertMessage, setTurn, move);
+      playerToDemo(staticPokemon, move);
     } else if (turn === 1 && damageTaker === "staticHealth") {
-      DemoToPlayer(setHealth, setAlertMessage, setTurn, move);
+      demoToPlayer(pokemon, move);
     } else {
-      InvalidTurn(setAlertMessage);
+      invalidTurn();
     }
   };
 
-  console.log(health === 0 || staticHealth === 0 && gameOver === false )
-
-  if((health === 0 || staticHealth === 0) && gameOver === false) setGameOver(true)
-  
   return (
     <div className="grid grid-cols-2 gap-100 px-10 h-screen w-screen">
       {gameOver ? (

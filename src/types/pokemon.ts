@@ -1,3 +1,12 @@
+export type SetNum = (value: number | null | ((prev: number | null) => number | null)) => void;
+export type SetString = (msg: string | null | ((prev: string | null) => string | null)) => void;
+export type SetTurn = (value: 0 | 1 | ((prev: 0 | 1) => 0 | 1)) => void;
+export type SetGameOver = (value: boolean | ((prev: boolean) => boolean)) => void;
+export type Move = { name: string; power: number; accuracy: number };
+export type HandleTurn = (move: Move, powerTaker: string) => void;
+export type HasMoved = React.RefObject<boolean>;
+export type TimerRef = React.RefObject<ReturnType<typeof setTimeout> | null>;
+
 interface PokemonStats {
   base_stat: number;
   stat: {
@@ -14,12 +23,6 @@ interface PokemonAbility {
 interface PokemonType {
   type: {
     name: string;
-  };
-}
-
-interface pokemonSpecy {
-  flavorTexts: {
-    flavorText: string;
   };
 }
 
@@ -42,9 +45,9 @@ export interface Pokemon {
 }
 
 export interface FightingPokemon extends Pokemon {
-  health: number,
-  className?: string,
-  imgClassName?: string,
+  health: number;
+  className?: string;
+  imgClassName?: string;
 }
 
 export interface RawPokemon {
